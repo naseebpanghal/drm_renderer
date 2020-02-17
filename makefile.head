@@ -1,0 +1,18 @@
+CC=g++
+DIR=dir
+OBJ_DIR=obj
+BIN_DIR=.
+VERSION=1.0.0
+BIN_NAME=drmRender
+TARGET=$(BIN_DIR)/$(BIN_NAME)
+LIB_INSTALL_PATH=
+HEADERS_INSTALL_PATH=
+SRC_CPP+=main.cpp
+SRC_CPP+=drmRender.cpp
+OBJ_FILES=$(SRC_CPP:%.cpp=$(OBJ_DIR)/%.o)
+
+
+CFLAGS=-g -I/usr/include/libdrm
+
+LIBS=-ldrm
+LDFLAGS=
