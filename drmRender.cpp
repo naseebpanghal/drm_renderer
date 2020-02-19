@@ -93,13 +93,21 @@ int drmRender::init()
 
     for (j=0; j<ovr->count_formats; j++)
     {
-      if (ovr->formats[j] ==  DRM_FORMAT_NV12) 
+      char a = ovr->formats[j] & 0x000000FF;
+      char b = (ovr->formats[j] >> 8) & 0x000000FF;
+      char c = (ovr->formats[j] >> 16) & 0x000000FF;
+      char d = (ovr->formats[j] >> 24) & 0x000000FF;
+      printf("format[%d]: %c%c%c%c\n", j, a,b,c,d);
+      //if (ovr->formats[j] ==  DRM_FORMAT_NV12) 
+      if (ovr->formats[j] ==  DRM_FORMAT_YUYV) 
       {
+        printf("found DRM_FORMAT_NV12\n");
         break;
       }
     }
     if (j==ovr->count_formats)
     {
+      printf("exhausted...continue\n");
       continue;
     }
 
@@ -122,6 +130,7 @@ int drmRender::init()
         if (!strcmp(prop->name, "type") && props->prop_values[j] == DRM_PLANE_TYPE_OVERLAY) 
         {
           plane_id = ovr->plane_id;
+          std::cout << "plane_id: " << plane_id << std::endl;
         }
         drmModeFreeProperty(prop);
       }
